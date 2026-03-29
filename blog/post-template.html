@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Title | Yotam Levi</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        /* Medium/Substack Reading Experience Styles */
+        .article-container {
+            max-width: 680px;
+            /* Optimal reading width */
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .article-header {
+            margin-bottom: 40px;
+        }
+
+        .article-title {
+            font-size: clamp(2.2rem, 5vw, 3rem);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            padding-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .article-content {
+            font-size: 1.15rem;
+            line-height: 1.7;
+            color: #e2e8f0;
+        }
+
+        .article-content p {
+            margin-bottom: 24px;
+        }
+
+        .article-content h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 40px 0 20px 0;
+        }
+
+        .article-content h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #f8fafc;
+            margin: 30px 0 16px 0;
+        }
+
+        .article-content a {
+            color: var(--accent-blue);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(37, 99, 235, 0.3);
+            transition: border-color 0.2s;
+        }
+
+        .article-content a:hover {
+            border-bottom-color: var(--accent-blue);
+        }
+
+        .article-content pre {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 24px;
+            font-family: monospace;
+            font-size: 0.95rem;
+        }
+
+        .article-content code {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+
+        .article-content blockquote {
+            border-left: 4px solid var(--accent-blue);
+            padding-left: 20px;
+            margin: 30px 0;
+            font-style: italic;
+            color: #cbd5e1;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 40px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar scrolled" id="main-nav">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-logo text-gradient">Y7M</a>
+            <div class="nav-links">
+                <a href="../index.html#about" class="nav-link">About</a>
+                <a href="../index.html#projects" class="nav-link">Projects</a>
+                <a href="index.html" class="nav-link">Blog</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-content">
+
+        <article class="article-container section visible">
+
+            <a href="index.html" class="back-link">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                Back to Blog
+            </a>
+
+            <header class="article-header">
+                <h1 class="article-title text-gradient">Building a portfolio that doesn't just look like a template</h1>
+                <div class="article-meta">
+                    <span>March 2, 2026</span>
+                    <span>•</span>
+                    <span>5 min read</span>
+                </div>
+            </header>
+
+            <div class="article-content">
+                <p>When setting out to build a personal developer portfolio, the easiest path is usually grabbing a
+                    standard Next.js or Astro template and modifying the colors slightly. However, if you want to stand
+                    out, you need to inject some personality.</p>
+
+                <h2>The Power of Interactivity</h2>
+                <p>One way to keep people on your site is to give them something to do. Instead of just listing my
+                    skills in a boring grid, I decided to include a fully functional game of 2048 right on the homepage.
+                </p>
+
+                <blockquote>
+                    "The best portfolios aren't just read; they are experienced."
+                </blockquote>
+
+                <h3>Code Example</h3>
+                <p>Keeping the <code>UI</code> logic separated from your data is key. Here's roughly how you might
+                    structure the grid logic:</p>
+
+                <pre><code>function restartGame() {
+    grid = Array(SIZE).fill().map(() => Array(SIZE).fill(null));
+    score = 0;
+    addNewTile(true);
+    renderBoard();
+}
+</code></pre>
+
+                <p>Using vanilla HTML/CSS/JS means zero build steps, and publishing to GitHub Pages is as easy as
+                    running a git commit push. Sometimes, the simplest solutions are the most elegant.</p>
+                <p>Thanks for reading!</p>
+            </div>
+        </article>
+
+    </div>
+
+</body>
+
+</html>

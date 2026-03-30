@@ -196,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function moveRight() {
         resetMergeFlags(); let changed = false;
         for (let r = 0; r < SIZE; r++) {
-            let oldRow = getRow(r); let res = operate(oldRow.reverse()); let finalRow = res.row.reverse();
+            let oldRow = getRow(r); let res = operate([...oldRow].reverse()); let finalRow = [...res.row].reverse();
             if (JSON.stringify(oldRow) !== JSON.stringify(finalRow)) changed = true;
             for (let c = 0; c < SIZE; c++) grid[r][c] = finalRow[c];
             res.mergedIndices.forEach(i => mergedState[r][SIZE - 1 - i] = true);
@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function moveDown() {
         resetMergeFlags(); let changed = false;
         for (let c = 0; c < SIZE; c++) {
-            let oldCol = getCol(c); let res = operate(oldCol.reverse()); let finalCol = res.row.reverse();
+            let oldCol = getCol(c); let res = operate([...oldCol].reverse()); let finalCol = [...res.row].reverse();
             if (JSON.stringify(oldCol) !== JSON.stringify(finalCol)) changed = true;
             for (let r = 0; r < SIZE; r++) { grid[r][c] = finalCol[r]; if (res.mergedIndices.includes(SIZE - 1 - r)) mergedState[r][c] = true; }
         }
@@ -268,5 +268,19 @@ document.addEventListener('DOMContentLoaded', () => {
     function showMessage(msg) {
         document.getElementById('message-text').innerText = msg;
         document.getElementById('game-message').style.display = 'flex';
+    }
+
+    // --- Theme Switch Logic ---
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+    
+    const themeSwitch = document.getElementById('theme-switch');
+    if (themeSwitch) {
+        themeSwitch.checked = savedTheme === 'dark';
+        themeSwitch.addEventListener('change', (e) => {
+            const isDark = e.target.checked;
+            document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        });
     }
 });

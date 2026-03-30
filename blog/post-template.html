@@ -7,10 +7,9 @@
     <title>Post Title | Yotam Levi</title>
     <link rel="stylesheet" href="../style.css">
     <style>
-        /* Medium/Substack Reading Experience Styles */
+        /* Medium/Substack Reading Experience Styles adapted for Neumorphism */
         .article-container {
             max-width: 680px;
-            /* Optimal reading width */
             margin: 0 auto;
             width: 100%;
         }
@@ -24,23 +23,24 @@
             font-weight: 800;
             line-height: 1.2;
             margin-bottom: 20px;
-            color: #fff;
+            color: var(--text-main);
         }
 
         .article-meta {
             display: flex;
             align-items: center;
             gap: 15px;
-            color: var(--text-muted);
+            color: var(--accent-blue);
+            font-weight: 600;
             font-size: 0.95rem;
             padding-bottom: 30px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 2px solid var(--shadow-dark); /* Neumorphic inset/divider */
         }
 
         .article-content {
             font-size: 1.15rem;
             line-height: 1.7;
-            color: #e2e8f0;
+            color: var(--text-main);
         }
 
         .article-content p {
@@ -49,69 +49,93 @@
 
         .article-content h2 {
             font-size: 1.8rem;
-            font-weight: 700;
-            color: #fff;
+            font-weight: 800;
+            color: var(--text-main);
             margin: 40px 0 20px 0;
+            border-left: 6px solid var(--accent-blue);
+            padding-left: 15px;
         }
 
         .article-content h3 {
             font-size: 1.4rem;
-            font-weight: 600;
-            color: #f8fafc;
+            font-weight: 700;
+            color: var(--accent-blue);
             margin: 30px 0 16px 0;
         }
 
         .article-content a {
             color: var(--accent-blue);
             text-decoration: none;
-            border-bottom: 1px solid rgba(37, 99, 235, 0.3);
+            border-bottom: 2px solid rgba(40, 75, 99, 0.3);
             transition: border-color 0.2s;
+            font-weight: 800;
         }
 
         .article-content a:hover {
             border-bottom-color: var(--accent-blue);
         }
 
+        /* Neumorphic code blocks */
         .article-content pre {
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--bg-body);
+            box-shadow: var(--neu-inner);
             padding: 20px;
-            border-radius: 8px;
+            border-radius: 12px;
             overflow-x: auto;
             margin-bottom: 24px;
             font-family: monospace;
             font-size: 0.95rem;
+            color: var(--text-main);
         }
 
         .article-content code {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 2px 6px;
-            border-radius: 4px;
+            background: var(--bg-body);
+            box-shadow: var(--neu-outer);
+            padding: 4px 8px;
+            border-radius: 6px;
             font-family: monospace;
             font-size: 0.9em;
+            color: var(--accent-blue);
+            font-weight: 700;
         }
 
+        /* Neumorphic blockquote */
         .article-content blockquote {
             border-left: 4px solid var(--accent-blue);
-            padding-left: 20px;
+            padding: 20px;
             margin: 30px 0;
             font-style: italic;
-            color: #cbd5e1;
+            color: var(--text-main);
+            opacity: 0.85;
+            background: var(--bg-body);
+            box-shadow: var(--neu-inner);
+            border-radius: 0 12px 12px 0;
         }
 
+        /* Neumorphic Return Button */
         .back-link {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            color: var(--text-muted);
+            color: var(--accent-blue);
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 800;
             margin-bottom: 40px;
-            transition: color 0.2s;
+            transition: transform 0.2s, box-shadow 0.2s;
+            padding: 8px 16px;
+            background: var(--bg-body);
+            border-radius: 8px;
+            box-shadow: var(--neu-outer);
         }
 
         .back-link:hover {
-            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: var(--neu-pop);
+        }
+
+        .back-link:active {
+            transform: translateY(1px);
+            box-shadow: var(--neu-inner);
         }
     </style>
 </head>
@@ -121,11 +145,17 @@
     <!-- Navigation Bar -->
     <nav class="navbar scrolled" id="main-nav">
         <div class="nav-container">
-            <a href="../index.html" class="nav-logo text-gradient">Y7M</a>
+            <a href="../index.html" class="nav-logo text-primary">Y7M</a>
             <div class="nav-links">
                 <a href="../index.html#about" class="nav-link">About</a>
                 <a href="../index.html#projects" class="nav-link">Projects</a>
-                <a href="index.html" class="nav-link">Blog</a>
+                <a href="index.html" class="nav-link text-primary" style="font-weight:800;">Blog</a>
+                <label class="label" aria-label="Toggle Dark Mode" title="Toggle Dark Mode" style="margin-left: 15px; cursor: pointer;">
+                    <div class="toggle">
+                        <input class="toggle-state" type="checkbox" id="theme-switch" />
+                        <div class="indicator"></div>
+                    </div>
+                </label>
             </div>
         </div>
     </nav>
@@ -144,7 +174,7 @@
             </a>
 
             <header class="article-header">
-                <h1 class="article-title text-gradient">Building a portfolio that doesn't just look like a template</h1>
+                <h1 class="article-title text-primary">Building a portfolio that doesn't just look like a template</h1>
                 <div class="article-meta">
                     <span>March 2, 2026</span>
                     <span>•</span>
@@ -153,33 +183,26 @@
             </header>
 
             <div class="article-content">
-                <p>When setting out to build a personal developer portfolio, the easiest path is usually grabbing a
-                    standard Next.js or Astro template and modifying the colors slightly. However, if you want to stand
-                    out, you need to inject some personality.</p>
+                <p>When setting out to build a personal developer portfolio, the easiest path is usually grabbing a standard Next.js or Astro template and modifying the colors slightly. However, if you want to stand out, you need to inject some personality.</p>
 
                 <h2>The Power of Interactivity</h2>
-                <p>One way to keep people on your site is to give them something to do. Instead of just listing my
-                    skills in a boring grid, I decided to include a fully functional game of 2048 right on the homepage.
-                </p>
+                <p>One way to keep people on your site is to give them something to do. Instead of just listing my skills in a boring grid, I decided to include a fully functional game of 2048 right on the homepage.</p>
 
                 <blockquote>
                     "The best portfolios aren't just read; they are experienced."
                 </blockquote>
 
                 <h3>Code Example</h3>
-                <p>Keeping the <code>UI</code> logic separated from your data is key. Here's roughly how you might
-                    structure the grid logic:</p>
+                <p>Keeping the <code>UI</code> logic separated from your data is key. Here's roughly how you might structure the grid logic:</p>
 
                 <pre><code>function restartGame() {
     grid = Array(SIZE).fill().map(() => Array(SIZE).fill(null));
     score = 0;
     addNewTile(true);
     renderBoard();
-}
-</code></pre>
+}</code></pre>
 
-                <p>Using vanilla HTML/CSS/JS means zero build steps, and publishing to GitHub Pages is as easy as
-                    running a git commit push. Sometimes, the simplest solutions are the most elegant.</p>
+                <p>Using vanilla HTML/CSS/JS means zero build steps, and publishing to GitHub Pages is as easy as running a git commit push. Sometimes, the simplest solutions are the most elegant.</p>
                 <p>Thanks for reading!</p>
             </div>
         </article>

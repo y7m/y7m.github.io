@@ -19,11 +19,17 @@
     <!-- Navigation Bar -->
     <nav class="navbar" id="main-nav">
         <div class="nav-container">
-            <a href="#" class="nav-logo text-gradient">Y7M</a>
+            <a href="#" class="nav-logo text-primary">Y7M</a>
             <div class="nav-links">
                 <a href="#about" class="nav-link">About</a>
                 <a href="#projects" class="nav-link">Projects</a>
                 <a href="/blog/index.html" class="nav-link">Blog</a>
+                <label class="label" aria-label="Toggle Dark Mode" title="Toggle Dark Mode" style="margin-left: 15px; cursor: pointer;">
+                    <div class="toggle">
+                        <input class="toggle-state" type="checkbox" id="theme-switch" />
+                        <div class="indicator"></div>
+                    </div>
+                </label>
             </div>
         </div>
     </nav>
@@ -33,8 +39,8 @@
         <!-- Hero / About Section -->
         <section id="about" class="hero-section">
             <h1 class="hero-title">
-                <span class="text-gradient">Hi, I'm Yotam</span><br>
-                <span class="text-gradient-accent">Software Developer.</span>
+                <span class="text-primary">Hi, I'm Yotam</span><br>
+                <span class="text-accent">Software Developer.</span>
             </h1>
             <p class="hero-subtitle">
                 Welcome to my digital space. I build applications, write about tech, and occasionally make games.
@@ -63,17 +69,17 @@
             </div>
 
             <div style="margin-top: 20px;">
-                <a href="assets/Yotam_Levi_CV.pdf" download="Yotam_Levi_CV.pdf" class="shiny-btn">Download Resume</a>
+                <a href="assets/Yotam_Levi_CV.pdf" download="Yotam_Levi_CV.pdf" class="neu-btn">Download Resume</a>
             </div>
         </section>
 
         <!-- Projects Section -->
         <section id="projects">
-            <h2 class="section-title text-gradient">Featured Projects</h2>
+            <h2 class="section-title text-primary">Featured Projects</h2>
             <div class="projects-grid">
 
                 <!-- Project Card Example 1: Local Subdirectory Link -->
-                <a href="/other-project/" class="glass-card project-card">
+                <a href="/other-project/" class="neu-card project-card">
                     <h3>Project Name 1</h3>
                     <p>A description of the project goes here. This placeholder demonstrates how a project located in a
                         <code>/other-project</code> subdirectory would link perfectly onto the page.</p>
@@ -85,7 +91,7 @@
                 </a>
 
                 <!-- Project Card Example 2: External Link -->
-                <a href="#" class="glass-card project-card">
+                <a href="#" class="neu-card project-card">
                     <h3>Project Name 2</h3>
                     <p>Another placeholder project. Discuss what problem it solves and how you approached the
                         architectural design principles.</p>
@@ -96,7 +102,7 @@
                 </a>
 
                 <!-- Project Card 3 -->
-                <a href="#" class="glass-card project-card">
+                <a href="#" class="neu-card project-card">
                     <h3>Project Name 3</h3>
                     <p>A third example showing how the CSS grid automatically handles wrapping and spacing between cards
                         in the user interface layout.</p>
@@ -111,7 +117,7 @@
 
         <!-- Game Transition Section -->
         <section id="game-intro" class="game-cta">
-            <div class="text-gradient" style="font-size: 1.3rem; font-weight: 600;">Or, scroll down and play a game or
+            <div class="text-primary" style="font-size: 1.3rem; font-weight: 600;">Or, scroll down and play a game or
                 two ;)</div>
             <div class="scroll-indicator">
                 <div class="scroll-dot"></div>
@@ -123,7 +129,7 @@
             <div class="game-module">
                 <div class="game-header-bar">
                     <div style="flex:1;">
-                        <h3 class="text-gradient" style="margin:0; font-size:1.5rem; font-weight:800;">2048</h3>
+                        <h3 class="text-primary" style="margin:0; font-size:1.5rem; font-weight:800;">2048</h3>
                         <p class="text-muted" style="margin:5px 0 0 0; font-size:0.85rem;">Swipe or use arrow keys</p>
                     </div>
                     <div class="score-box">

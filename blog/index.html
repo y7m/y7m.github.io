@@ -8,7 +8,7 @@
     <!-- Use the style.css from the parent directory -->
     <link rel="stylesheet" href="../style.css">
     <style>
-        /* Blog Specific Styles for readability (Medium/Substack inspired) */
+        /* Blog Specific Styles for readability (Neumorphic) */
         .blog-header {
             margin-bottom: 50px;
         }
@@ -19,28 +19,19 @@
             gap: 30px;
         }
 
+        /* Leveraging .neu-card from style.css but adding specific internal layout */
         .blog-card {
-            background: rgba(30, 41, 59, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: var(--radius);
-            padding: 30px;
             text-decoration: none;
             color: inherit;
-            transition: background 0.2s, transform 0.2s;
             display: flex;
             flex-direction: column;
             gap: 10px;
         }
 
-        .blog-card:hover {
-            background: rgba(51, 65, 85, 0.5);
-            transform: translateY(-2px);
-        }
-
         .blog-date {
-            color: var(--text-muted);
+            color: var(--accent-blue);
             font-size: 0.9rem;
-            font-weight: 600;
+            font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
@@ -53,7 +44,8 @@
         }
 
         .blog-excerpt {
-            color: #cbd5e1;
+            color: var(--text-main);
+            opacity: 0.85;
             font-size: 1.05rem;
             line-height: 1.6;
             margin-top: 5px;
@@ -66,11 +58,17 @@
     <!-- Navigation Bar -->
     <nav class="navbar scrolled" id="main-nav">
         <div class="nav-container">
-            <a href="../index.html" class="nav-logo text-gradient">Y7M</a>
+            <a href="../index.html" class="nav-logo text-primary">Y7M</a>
             <div class="nav-links">
                 <a href="../index.html#about" class="nav-link">About</a>
                 <a href="../index.html#projects" class="nav-link">Projects</a>
-                <a href="index.html" class="nav-link" style="color: #fff;">Blog</a>
+                <a href="index.html" class="nav-link text-primary" style="font-weight:800;">Blog</a>
+                <label class="label" aria-label="Toggle Dark Mode" title="Toggle Dark Mode" style="margin-left: 15px; cursor: pointer;">
+                    <div class="toggle">
+                        <input class="toggle-state" type="checkbox" id="theme-switch" />
+                        <div class="indicator"></div>
+                    </div>
+                </label>
             </div>
         </div>
     </nav>
@@ -79,27 +77,24 @@
 
         <section class="visible">
             <div class="blog-header">
-                <h1 class="text-gradient" style="font-size: 3rem; font-weight: 800; margin-bottom: 10px;">Writing</h1>
-                <p style="color: var(--text-muted); font-size: 1.1rem;">Thoughts on software engineering, game dev, and
-                    life.</p>
+                <h1 class="text-primary" style="font-size: 3rem; font-weight: 800; margin-bottom: 10px;">Writing</h1>
+                <p style="color: var(--text-muted); font-size: 1.1rem; font-weight:600;">Thoughts on software engineering, game dev, and life.</p>
             </div>
 
             <div class="blog-list">
 
                 <!-- Blog Post Entry -->
-                <a href="/blog/post-template.html" class="blog-card">
+                <a href="/blog/post-template.html" class="neu-card blog-card">
                     <span class="blog-date">March 2, 2026</span>
                     <h2 class="blog-title">Building a portfolio that doesn't just look like a template</h2>
-                    <p class="blog-excerpt">Exploring the delicate balance between standard UX practices and injecting a
-                        bit of personality, like a fully playable 2048 game, into your personal site.</p>
+                    <p class="blog-excerpt">Exploring the delicate balance between standard UX practices and injecting a bit of personality, like a fully playable 2048 game, into your personal site.</p>
                 </a>
 
                 <!-- Blog Post Entry -->
-                <a href="#" class="blog-card">
+                <a href="#" class="neu-card blog-card">
                     <span class="blog-date">February 15, 2026</span>
                     <h2 class="blog-title">Learning modern CSS architectures</h2>
-                    <p class="blog-excerpt">A deep dive into variables, glassmorphism, and why we might not always need
-                        huge utility frameworks for small personal projects.</p>
+                    <p class="blog-excerpt">A deep dive into variables, neumorphism, and why we might not always need huge utility frameworks for small personal projects.</p>
                 </a>
 
             </div>

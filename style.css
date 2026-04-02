@@ -189,8 +189,8 @@ code { background: #fafafa; color: #e01258; padding: 4px 8px; border-radius: 6px
 .game-header .btn { background: var(--surface-card); color: var(--text-main); border: 1px solid var(--border-color); }
 .game-header .btn:hover { background: var(--tertiary); color: #fff; border-color: var(--tertiary); }
 
-.back-link { display: inline-flex; align-items: center; gap: 8px; color: var(--text-main); text-decoration: none; font-weight: 700; margin-bottom: 40px; transition: transform 0.2s; padding: 8px 16px; background: var(--surface-card); border-radius: var(--radius-btn); border: 1px solid var(--border-color); }
-.back-link:hover { transform: translateY(-2px); }
+.back-link { display: inline-flex; align-items: center; gap: 8px; color: var(--text-main); text-decoration: none; font-weight: 700; margin-bottom: 40px; transition: transform 0.2s, color 0.15s, border-color 0.15s; padding: 8px 16px; background: var(--surface-card); border-radius: var(--radius-btn); border: 1px solid var(--border-color); }
+.back-link:hover { transform: translateY(-2px); color: var(--primary); border-color: var(--primary); }
 
 /* Custom Brands */
 .btn-resume { background: var(--surface-card); color: var(--text-main); border: 1px solid var(--border-color); }
@@ -202,4 +202,4 @@ code { background: #fafafa; color: #e01258; padding: 4px 8px; border-radius: 6px
 .btn-resume:hover { background: #4A7C59 !important; border-color: #4A7C59 !important; color: #fff !important; }
 
 /* Interactive Background */
-#bg-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -10; pointer-events: none; opacity: 1; }
+#bg-canvas { position: absolute; top: 0; left: 0; z-index: -10; pointer-events: none; opacity: 1; }

@@ -312,7 +312,7 @@ document.addEventListener('DOMContentLoaded', () => {
         function initDots() {
             dots = [];
             width = window.innerWidth;
-            height = window.innerHeight;
+            height = Math.max(window.innerHeight, document.documentElement.scrollHeight);
             
             canvas.width = width * dpr;
             canvas.height = height * dpr;
@@ -397,14 +397,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let mouse = { x: -1000, y: -1000 };
         window.addEventListener('mousemove', e => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
+            mouse.x = e.pageX;
+            mouse.y = e.pageY;
         });
         
         window.addEventListener('touchmove', e => {
             if (e.touches.length > 0) {
-                mouse.x = e.touches[0].clientX;
-                mouse.y = e.touches[0].clientY;
+                mouse.x = e.touches[0].pageX;
+                mouse.y = e.touches[0].pageY;
             }
         }, {passive: true});
 

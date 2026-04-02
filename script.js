@@ -283,4 +283,349 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
         });
     }
+
+    // --- Interactive Dot Grid Physics ---
+    const canvas = document.getElementById('bg-canvas');
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
+        let width = window.innerWidth;
+        let height = window.innerHeight;
+        
+        // High-DPI Scaling for sharpness
+        const dpr = window.devicePixelRatio || 1;
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+        ctx.scale(dpr, dpr);
+        canvas.style.width = `${width}px`;
+        canvas.style.height = `${height}px`;
+
+        let dots = [];
+        const spacing = 40;
+        
+        // Resolve CSS variables for Canvas ingestion
+        const rootStyles = getComputedStyle(document.documentElement);
+        const colorPrimary = rootStyles.getPropertyValue('--primary').trim() || '#386FA4';
+        const colorSecondary = rootStyles.getPropertyValue('--secondary').trim() || '#9E7682';
+        const colorTertiary = rootStyles.getPropertyValue('--tertiary').trim() || '#C36F09';
+        const themeColors = [colorPrimary, colorSecondary, colorTertiary];
+        
+        function initDots() {
+            dots = [];
+            width = window.innerWidth;
+            
+            // Maintain 100vh canvas for rendering speed, but generate geometry for the entire scroll structure
+            const documentHeight = Math.max(window.innerHeight * 1.5, document.documentElement.scrollHeight);
+            height = documentHeight; 
+            
+            const viewportHeight = window.innerHeight;
+            
+            canvas.width = width * dpr;
+            canvas.height = viewportHeight * dpr;
+            ctx.setTransform(1, 0, 0, 1, 0, 0); // reset scale
+            ctx.scale(dpr, dpr);
+            canvas.style.width = `${width}px`;
+            canvas.style.height = `${viewportHeight}px`;
+            
+            // True Honeycomb Lattice Generator
+            const hexRadius = spacing; 
+            const hexWidth = Math.sqrt(3) * hexRadius;
+            const hexHeight = 2 * hexRadius; 
+            
+            let row = 0;
+            // Draw slightly out of bounds to allow scrolling elasticity overlap
+            for (let y = -spacing * 2; y < height + spacing * 2; y += 1.5 * hexRadius) {
+                let offsetX = (row % 2 === 1) ? (hexWidth / 2) : 0;
+                for (let x = -spacing * 2; x < width + spacing * 2; x += hexWidth) {
+                    
+                    let cx = x + offsetX;
+                    let cy = y;
+                    
+                    // Generate two points per hexagon center to create the Bravais lattice basis
+                    
+                    // Point 1: Top of slice
+                    let p1x = cx;
+                    let p1y = cy - 0.5 * hexRadius;
+                    let b1x = p1x + (Math.random() - 0.5) * spacing * 0.48;
+                    let b1y = p1y + (Math.random() - 0.5) * spacing * 0.48;
+                    
+                    dots.push({
+                        origX: p1x, origY: p1y,
+                        baseX: b1x, baseY: b1y,
+                        x: b1x, y: b1y,
+                        vx: 0, vy: 0,
+                        radius: 1.5, // Uniform scale
+                        color: Math.random() < 0.1 ? themeColors[Math.floor(Math.random() * themeColors.length)] : null,
+                        drawNeighbors: [],
+                        allNeighbors: [],
+                        timeOffset: Math.random() * 100,
+                        pulseSpeed: 0.8 + Math.random() * 0.4
+                    });
+
+                    // Point 2: Bottom of slice
+                    let p2x = cx;
+                    let p2y = cy + 0.5 * hexRadius;
+                    let b2x = p2x + (Math.random() - 0.5) * spacing * 0.48;
+                    let b2y = p2y + (Math.random() - 0.5) * spacing * 0.48;
+                    
+                    dots.push({
+                        origX: p2x, origY: p2y,
+                        baseX: b2x, baseY: b2y,
+                        x: b2x, y: b2y,
+                        vx: 0, vy: 0,
+                        radius: 1.5, // Uniform scale
+                        color: Math.random() < 0.1 ? themeColors[Math.floor(Math.random() * themeColors.length)] : null,
+                        drawNeighbors: [],
+                        allNeighbors: [],
+                        timeOffset: Math.random() * 100,
+                        pulseSpeed: 0.8 + Math.random() * 0.4
+                    });
+                }
+                row++;
+            }
+            
+            // Pre-calculate strict line connections for empty Hex Mesh
+            for (let i = 0; i < dots.length; i++) {
+                for (let j = i + 1; j < dots.length; j++) {
+                    // Honeycomb theoretical bond distance is EXACTLY `spacing` (40px)
+                    const dist = Math.hypot(dots[i].origX - dots[j].origX, dots[i].origY - dots[j].origY);
+                    if (dist > 0 && dist < spacing * 1.25) {
+                        dots[i].drawNeighbors.push(dots[j]);
+                        dots[i].allNeighbors.push(dots[j]);
+                        dots[j].allNeighbors.push(dots[i]); // two-way graph
+                    }
+                }
+            }
+        }
+        
+        window.addEventListener('resize', initDots);
+        initDots();
+
+        let mouse = { x: -1000, y: -1000 };
+        window.addEventListener('mousemove', e => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+        
+        window.addEventListener('touchmove', e => {
+            if (e.touches.length > 0) {
+                mouse.x = e.touches[0].clientX;
+                mouse.y = e.touches[0].clientY;
+            }
+        }, {passive: true});
+
+        function animate() {
+            ctx.setTransform(1, 0, 0, 1, 0, 0); // Reset for clear
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.scale(dpr, dpr); // Restore standard dpi scale
+            
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            const baseFillColorStr = isDark ? '255,255,255' : '0,0,0';
+            
+            const time = Date.now() * 0.001; 
+            
+            // Exactly 40% scrolling ratio
+            const parallaxY = window.scrollY * 0.4;
+            // Translate the Canvas coordinates upwards relative to smooth scrolling
+            ctx.translate(0, -parallaxY); 
+
+            // Neural Cascade Opacity Setup
+            let tempPulse = new Float32Array(dots.length);
+            let tempColor = new Array(dots.length);
+            
+            for (let i = 0; i < dots.length; i++) {
+                let dot = dots[i];
+                const centerDistX = Math.abs((width / 2) - dot.baseX) / (width / 2);
+                
+                // Track mouse proximity (Adjusted for parallax math natively so light binds perfectly to structure)
+                const distToMouse = Math.hypot(mouse.x - dot.x, (mouse.y + parallaxY) - dot.y);
+                const isHovered = distToMouse < 180;
+                
+                // Only fire pulses if colored AND outside the center 60%
+                if (dot.color && centerDistX > 0.6) {
+                    // 50% less frequent 
+                    const phase = (time * 0.25 * dot.pulseSpeed) + dot.timeOffset;
+                    dot.pulse = Math.pow((Math.sin(phase) + 1) / 2, 1000); 
+                    
+                    // Rests at Gray (null), ONLY adopts native color if currently firing OR hovered
+                    dot.cascadeColor = (dot.pulse > 0.01 || isHovered) ? dot.color : null;
+                } else {
+                    dot.pulse = 0;
+                    dot.cascadeColor = (dot.color && isHovered) ? dot.color : null; 
+                }
+            }
+            
+            // 2-Hop Jacobi Graph Diffusion for natural glowing color cascades
+            for (let iter = 0; iter < 2; iter++) {
+                for (let i = 0; i < dots.length; i++) {
+                    let maxPulse = dots[i].pulse;
+                    let bestColor = dots[i].cascadeColor;
+                    
+                    for (let neighbor of dots[i].allNeighbors) {
+                        let potentialPulse = neighbor.pulse * 0.5; // Cascading loss per hop
+                        
+                        // Colored nodes resist having their Hue overridden unless the wave is very strong (>0.2)
+                        let overrideThreshold = dots[i].color ? Math.max(dots[i].pulse, 0.2) : dots[i].pulse;
+                        
+                        if (potentialPulse > overrideThreshold) {
+                            maxPulse = potentialPulse;
+                            bestColor = neighbor.cascadeColor;
+                        } else if (potentialPulse > maxPulse) {
+                            // Adopt the kinetic intensity of the weak wave, but flare up with native color instead of remaining gray 
+                            maxPulse = potentialPulse;
+                            if (dots[i].color) bestColor = dots[i].color;
+                        }
+                    }
+                    tempPulse[i] = maxPulse;
+                    tempColor[i] = bestColor;
+                }
+                // Lock in pass
+                for (let i = 0; i < dots.length; i++) {
+                    dots[i].pulse = tempPulse[i];
+                    dots[i].cascadeColor = tempColor[i];
+                }
+            }
+
+            // First Pass: Physics
+            for (let dot of dots) {
+                const centerDistX = Math.abs((width / 2) - dot.baseX) / (width / 2);
+                
+                // Active Breathing isolated to thematic nodes outside center 60%
+                if (dot.color && centerDistX > 0.6) {
+                    const phase = (time * 0.5 * dot.pulseSpeed) + dot.timeOffset;
+                    dot.vx += Math.sin(phase) * 0.030;
+                    dot.vy += Math.cos(phase * 0.8) * 0.030;
+                }
+                
+                // Neural Physical Ripple: Expanding force when Action Potential fires
+                if (dot.pulse > 0.1) {
+                    for (let neighbor of dot.allNeighbors) {
+                        const ndx = neighbor.x - dot.x;
+                        const ndy = neighbor.y - dot.y;
+                        const dist = Math.max(Math.sqrt(ndx*ndx + ndy*ndy), 1);
+                        
+                        // Push force reduced by 50% (from 1.5 to 0.75)
+                        const pushForce = dot.pulse * 0.75 / dist; 
+                        neighbor.vx += ndx * pushForce;
+                        neighbor.vy += ndy * pushForce;
+                    }
+                }
+                
+                // Mouse Drag Elasticity & Light Flare (Mapped to parallax grid Y)
+                const dx = mouse.x - dot.x;
+                const dy = (mouse.y + parallaxY) - dot.y;
+                const dist = Math.sqrt(dx*dx + dy*dy);
+                
+                let mouseGlow = 0;
+                if (dist < 180) {
+                    const force = (180 - dist) / 180;
+                    dot.vx -= (dx / dist) * force * 0.8;
+                    dot.vy -= (dy / dist) * force * 0.8;
+                    
+                    // Creates a smooth gradient light source matching the physics radius
+                    mouseGlow = Math.pow(force, 1.5); 
+                }
+                
+                // Spring restitution returning to anchors (Reduced 30% for a looser, more organic mesh)
+                dot.vx += (dot.baseX - dot.x) * 0.025;
+                dot.vy += (dot.baseY - dot.y) * 0.025;
+                
+                // Structural String Pull 
+                for (let neighbor of dot.drawNeighbors) {
+                    const ndx = neighbor.x - dot.x;
+                    const ndy = neighbor.y - dot.y;
+                    const curDist = Math.sqrt(ndx*ndx + ndy*ndy);
+                    const restDist = Math.hypot(neighbor.baseX - dot.baseX, neighbor.baseY - dot.baseY);
+                    
+                    const diff = (curDist - restDist) / Math.max(restDist, 1);
+                    
+                    // Reduced 30% for loose honeycomb deformation
+                    const pullX = ndx * diff * 0.008;
+                    const pullY = ndy * diff * 0.008;
+                    
+                    dot.vx += pullX;
+                    dot.vy += pullY;
+                    neighbor.vx -= pullX;
+                    neighbor.vy -= pullY;
+                }
+                
+                // Inertia & Friction
+                dot.vx *= 0.85;
+                dot.vy *= 0.85;
+                
+                dot.x += dot.vx;
+                dot.y += dot.vy;
+                
+                // Parabolic X-Axis Opacity Mask (Widened 25% readability flat-zone)
+                const currentCenterDistX = Math.abs((width / 2) - dot.x) / (width / 2);
+                const shiftedDist = Math.max(0, currentCenterDistX - 0.25) / 0.75;
+                const structAlpha = Math.pow(shiftedDist, 2.5) * 0.45; // Base opacity severely reduced for contrast 
+                
+                // Additive flares (Neuron Pulse + Mouse Proximity Light)
+                // Mouse Glow is gated entirely by the underlying parabolic visibility mask
+                const gatedMouseGlow = mouseGlow * Math.max(0, Math.pow(shiftedDist, 1.5));
+                
+                const totalAdditiveGlare = Math.min((dot.pulse * 0.375) + (gatedMouseGlow * 0.5), 1.0);
+                let alpha = structAlpha + (totalAdditiveGlare * (1 - structAlpha)); 
+                
+                dot.alpha = alpha > 0.01 ? alpha : 0;
+            }
+            
+            // Second Pass: Draw Meshes (Lines)
+            ctx.lineWidth = 1 * dpr;
+            for (let dot of dots) {
+                if (dot.alpha === 0) continue;
+                for (let neighbor of dot.drawNeighbors) {
+                    if (neighbor.alpha === 0) continue;
+                    
+                    const lineAlpha = (dot.alpha + neighbor.alpha) / 2 * 0.35; 
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(dot.x, dot.y);
+                    ctx.lineTo(neighbor.x, neighbor.y);
+                    
+                    // Wave Color bridging
+                    let strokeColor = null;
+                    let maxPulseIntensity = Math.max(dot.pulse, neighbor.pulse);
+                    
+                    if (maxPulseIntensity > 0.05) {
+                        strokeColor = dot.pulse > neighbor.pulse ? dot.cascadeColor : neighbor.cascadeColor;
+                    }
+                    
+                    if (strokeColor) {
+                        // Action potential colors are 20% richer now
+                        ctx.globalAlpha = Math.min(lineAlpha * 2.5, 1); 
+                        ctx.strokeStyle = strokeColor;
+                    } else {
+                        ctx.globalAlpha = 1;
+                        ctx.strokeStyle = `rgba(${baseFillColorStr}, ${lineAlpha})`;
+                    }
+                    ctx.stroke();
+                }
+            }
+            ctx.globalAlpha = 1.0;
+
+            // Third Pass: Draw Nodes (Dots)
+            for (let dot of dots) {
+                if (dot.alpha === 0) continue;
+                
+                ctx.beginPath();
+                ctx.arc(dot.x, dot.y, dot.radius * (1 + dot.pulse * 0.5), 0, Math.PI * 2);
+                
+                const activeColor = dot.cascadeColor; 
+                
+                if (activeColor) {
+                    ctx.globalAlpha = Math.min(dot.alpha * 2.5, 1);
+                    ctx.fillStyle = activeColor;
+                    ctx.fill();
+                    ctx.globalAlpha = 1.0;
+                } else {
+                    ctx.fillStyle = `rgba(${baseFillColorStr}, ${dot.alpha})`;
+                    ctx.fill();
+                }
+            }
+            
+            requestAnimationFrame(animate);
+        }
+        animate();
+    }
 });

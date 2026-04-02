@@ -1,174 +1,81 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <!-- SEO Best Practices -->
-    <title>Yotam Levi | Software Developer</title>
-    <meta name="description"
-        content="Portfolio of Yotam Levi, showcasing software development projects, blog articles, and a playable 2048 clone.">
-    <link rel="stylesheet" href="style.css">
-
-    <!-- Deferred script to not block rendering -->
-    <script src="script.js" defer></script>
-</head>
-
-<body>
-
-    <!-- Navigation Bar -->
-    <nav class="navbar" id="main-nav">
-        <div class="nav-container">
-            <a href="#" class="nav-logo text-primary">Y7M</a>
-            <div class="nav-links">
-                <a href="#about" class="nav-link">About</a>
-                <a href="#projects" class="nav-link">Projects</a>
-                <a href="/blog/index.html" class="nav-link">Blog</a>
-                <label class="label" aria-label="Toggle Dark Mode" title="Toggle Dark Mode" style="margin-left: 15px; cursor: pointer;">
-                    <div class="toggle">
-                        <input class="toggle-state" type="checkbox" id="theme-switch" />
-                        <div class="indicator"></div>
-                    </div>
-                </label>
-            </div>
-        </div>
-    </nav>
+---
+layout: default
+nav_scrolled: false
+---
 
     <div class="main-content">
 
-        <!-- Hero / About Section -->
-        <section id="about" class="hero-section">
-            <h1 class="hero-title">
-                <span class="text-primary">Hi, I'm Yotam</span><br>
-                <span class="text-accent">Software Developer.</span>
-            </h1>
-            <p class="hero-subtitle">
-                Welcome to my digital space. I build applications, write about tech, and occasionally make games.
-            </p>
+        <!-- Hero Section -->
+        <!-- Hero Section -->
+        <section id="hero" class="visible" style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 80px; align-items: center; justify-content: space-between;">
+            <div class="hero-content" style="flex: 1;">
+                <h1>Hi, I'm <span class="text-primary">Yotam</span></h1>
+                <h2 style="margin-bottom: 40px;">I build things.</h2>
 
-            <div class="icon-row">
-                <a href="mailto:mryotam@gmail.com" class="social-btn" aria-label="Email">
-                    <svg viewBox="0 0 24 24">
-                        <path
-                            d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
-                    </svg>
-                </a>
-                <a href="https://www.linkedin.com/in/y7m/" class="social-btn" aria-label="LinkedIn" target="_blank"
-                    rel="noopener">
-                    <svg viewBox="0 0 24 24">
-                        <path
-                            d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.68 1.68 0 0 0-1.68 1.69c0 .93.75 1.68 1.68 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
-                    </svg>
-                </a>
-                <a href="https://github.com/y7m" class="social-btn" aria-label="GitHub" target="_blank" rel="noopener">
-                    <svg viewBox="0 0 24 24">
-                        <path
-                            d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
-                    </svg>
-                </a>
+                <div class="social-links" style="display: flex; gap: 16px; align-items: center;">
+                    <a href="mailto:mryotam@gmail.com" class="icon-btn" aria-label="Email" data-brand="email">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    </a>
+                    <a href="https://www.linkedin.com/in/y7m/" target="_blank" class="icon-btn" aria-label="LinkedIn" data-brand="linkedin">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                    </a>
+                    <a href="https://github.com/y7m" target="_blank" class="icon-btn" aria-label="GitHub" data-brand="github">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                    </a>
+                    <a href="{{ '/assets/Yotam_Levi_CV.pdf' | relative_url }}" target="_blank" download class="btn btn-resume" style="margin-left: 12px;">Download Resume</a>
+                </div>
             </div>
 
-            <div style="margin-top: 20px;">
-                <a href="assets/Yotam_Levi_CV.pdf" download="Yotam_Levi_CV.pdf" class="neu-btn">Download Resume</a>
+            <!-- Game Section -->
+            <div class="hero-game" style="flex-shrink: 0;">
+                <div class="game-header" style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px;">
+                    <div class="score-box" style="line-height: 1;">
+                        <span style="font-size: 0.75rem; font-weight: 800; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase;">Current Score</span><br>
+                        <strong id="score" style="font-size: 2.2rem; color: var(--text-main); font-variant-numeric: tabular-nums;">0</strong>
+                    </div>
+                    <button class="btn" style="padding: 10px 20px; font-size: 0.95rem;" onclick="restartGame()">Restart</button>
+                </div>
+                
+                <div class="game-container" id="game-container">
+                    <div class="grid-bg">
+                        <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
+                        <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
+                        <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
+                        <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
+                    </div>
+                    <div id="tile-container"></div>
+                    <div id="game-message" class="game-message" style="display: none;">
+                        <h2 id="message-text">Game Over</h2>
+                        <button class="btn" style="margin-top: 15px;" onclick="restartGame()">Try Again</button>
+                    </div>
+                </div>
             </div>
         </section>
+
 
         <!-- Projects Section -->
         <section id="projects">
-            <h2 class="section-title text-primary">Featured Projects</h2>
+            <h2 class="text-primary" style="margin-bottom: 24px;">Featured Projects</h2>
             <div class="projects-grid">
-
-                <!-- Project Card Example 1: Local Subdirectory Link -->
-                <a href="/other-project/" class="neu-card project-card">
-                    <h3>Project Name 1</h3>
-                    <p>A description of the project goes here. This placeholder demonstrates how a project located in a
-                        <code>/other-project</code> subdirectory would link perfectly onto the page.</p>
-                    <div class="project-tech">
-                        <span class="tech-tag">HTML5</span>
-                        <span class="tech-tag">CSS3</span>
-                        <span class="tech-tag">JS</span>
+                
+                <!-- Project Card 1: OrgChart Builder -->
+                <a href="/orgchart-builder/" class="card project-card" style="text-decoration: none; color: inherit; display: block;">
+                    <h3>OrgChart Builder</h3>
+                    <p>A performant React application utilizing D3 and Zustand for visually drafting and importing organizational hierarchies fully in the browser.</p>
+                    <div class="tech-stack">
+                        <div class="tech-tag" data-lang="react">React</div>
+                        <div class="tech-tag" data-lang="javascript">Zustand</div>
+                        <div class="tech-tag" data-lang="javascript">D3.js</div>
                     </div>
                 </a>
 
-                <!-- Project Card Example 2: External Link -->
-                <a href="#" class="neu-card project-card">
-                    <h3>Project Name 2</h3>
-                    <p>Another placeholder project. Discuss what problem it solves and how you approached the
-                        architectural design principles.</p>
-                    <div class="project-tech">
-                        <span class="tech-tag">React</span>
-                        <span class="tech-tag">Node.js</span>
-                    </div>
-                </a>
-
-                <!-- Project Card 3 -->
-                <a href="#" class="neu-card project-card">
-                    <h3>Project Name 3</h3>
-                    <p>A third example showing how the CSS grid automatically handles wrapping and spacing between cards
-                        in the user interface layout.</p>
-                    <div class="project-tech">
-                        <span class="tech-tag">Python</span>
-                        <span class="tech-tag">Flask</span>
-                    </div>
-                </a>
-
-            </div>
-        </section>
-
-        <!-- Game Transition Section -->
-        <section id="game-intro" class="game-cta">
-            <div class="text-primary" style="font-size: 1.3rem; font-weight: 600;">Or, scroll down and play a game or
-                two ;)</div>
-            <div class="scroll-indicator">
-                <div class="scroll-dot"></div>
-            </div>
-        </section>
-
-        <!-- 2048 Game Section -->
-        <section id="game" class="game-section-wrapper">
-            <div class="game-module">
-                <div class="game-header-bar">
-                    <div style="flex:1;">
-                        <h3 class="text-primary" style="margin:0; font-size:1.5rem; font-weight:800;">2048</h3>
-                        <p class="text-muted" style="margin:5px 0 0 0; font-size:0.85rem;">Swipe or use arrow keys</p>
-                    </div>
-                    <div class="score-box">
-                        <div class="score-label">Score</div>
-                        <div class="score-val" id="score">0</div>
-                    </div>
+                <!-- Project Card 2 -->
+                <div class="card project-card">
+                    <h3>Coming soon</h3>
+                    <p>A cross platform app in the recreational culinary space.</p>
                 </div>
 
-                <div class="game-container" id="game-container">
-                    <div class="grid-container" id="grid-container">
-                        <div class="grid-cell"></div>
-                        <div class="grid-cell"></div>
-                        <div class="grid-cell"></div>
-                        <div class="grid-cell"></div>
-                        <div class="grid-cell"></div>
-                        <div class="grid-cell"></div>
-                        <div class="grid-cell"></div>
-                        <div class="grid-cell"></div>
-                        <div class="grid-cell"></div>
-                        <div class="grid-cell"></div>
-                        <div class="grid-cell"></div>
-                        <div class="grid-cell"></div>
-                        <div class="grid-cell"></div>
-                        <div class="grid-cell"></div>
-                        <div class="grid-cell"></div>
-                        <div class="grid-cell"></div>
-                    </div>
-                    <div class="tile-container" id="tile-container"></div>
-
-                    <div class="game-message" id="game-message">
-                        <p id="message-text">Game Over!</p>
-                        <button class="game-btn" onclick="window.restartGame()">Play Again</button>
-                    </div>
-                </div>
             </div>
         </section>
 
     </div>
-
-</body>
-
-</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title | default: "Yotam | Portfolio" }}</title>
+    <!-- Google Stitch System Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ '/style.css' | relative_url }}?v={{ site.time | date: '%s' }}">
+    <!-- Highlight.js Themes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css" id="hljs-light">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" id="hljs-dark" disabled>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ '/assets/favicon.png' | relative_url }}?v={{ site.time | date: '%s' }}">
+    <link rel="apple-touch-icon" href="{{ '/assets/favicon.png' | relative_url }}?v={{ site.time | date: '%s' }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <!-- Prevent FOUC -->
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
+</head>
+
+<body>
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar {% if page.nav_scrolled %}scrolled{% endif %}" id="main-nav">
+        <div class="nav-container">
+            <a href="{{ '/' | relative_url }}" class="nav-logo {% if page.nav_scrolled %}text-primary{% endif %}">Y7M</a>
+            <div class="nav-links">
+                <a href="{{ '/#projects' | relative_url }}" class="nav-link">Projects</a>
+                <a href="{{ '/blog/' | relative_url }}" class="nav-link {% if page.nav_scrolled %}text-primary{% endif %}" {% if page.nav_scrolled %}style="font-weight:800;"{% endif %}>Blog</a>
+                <label class="label" aria-label="Toggle Dark Mode" title="Toggle Dark Mode" style="margin-left: 15px; cursor: pointer;">
+                    <div class="toggle">
+                        <input class="toggle-state" type="checkbox" id="theme-switch" />
+                        <div class="indicator"></div>
+                    </div>
+                </label>
+            </div>
+        </div>
+    </nav>
+
+    {{ content }}
+
+    <script src="{{ '/script.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>
+    <script>
+        // Safely execute HighlightJS after render
+        if (typeof hljs !== 'undefined') {
+            hljs.highlightAll();
+        }
+    </script>
+</body>
+
+</html>

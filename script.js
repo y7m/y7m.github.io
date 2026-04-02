@@ -312,14 +312,19 @@ document.addEventListener('DOMContentLoaded', () => {
         function initDots() {
             dots = [];
             width = window.innerWidth;
-            height = Math.max(window.innerHeight, document.documentElement.scrollHeight);
+            
+            // Maintain 100vh canvas for rendering speed, but generate geometry for the entire scroll structure
+            const documentHeight = Math.max(window.innerHeight * 1.5, document.documentElement.scrollHeight);
+            height = documentHeight; 
+            
+            const viewportHeight = window.innerHeight;
             
             canvas.width = width * dpr;
-            canvas.height = height * dpr;
+            canvas.height = viewportHeight * dpr;
             ctx.setTransform(1, 0, 0, 1, 0, 0); // reset scale
             ctx.scale(dpr, dpr);
             canvas.style.width = `${width}px`;
-            canvas.style.height = `${height}px`;
+            canvas.style.height = `${viewportHeight}px`;
             
             // True Honeycomb Lattice Generator
             const hexRadius = spacing; 
@@ -397,23 +402,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let mouse = { x: -1000, y: -1000 };
         window.addEventListener('mousemove', e => {
-            mouse.x = e.pageX;
-            mouse.y = e.pageY;
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
         });
         
         window.addEventListener('touchmove', e => {
             if (e.touches.length > 0) {
-                mouse.x = e.touches[0].pageX;
-                mouse.y = e.touches[0].pageY;
+                mouse.x = e.touches[0].clientX;
+                mouse.y = e.touches[0].clientY;
             }
         }, {passive: true});
 
         function animate() {
-            ctx.clearRect(0, 0, width, height);
+            ctx.setTransform(1, 0, 0, 1, 0, 0); // Reset for clear
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.scale(dpr, dpr); // Restore standard dpi scale
+            
             const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
             const baseFillColorStr = isDark ? '255,255,255' : '0,0,0';
             
             const time = Date.now() * 0.001; 
+            
+            // Exactly 40% scrolling ratio
+            const parallaxY = window.scrollY * 0.4;
+            // Translate the Canvas coordinates upwards relative to smooth scrolling
+            ctx.translate(0, -parallaxY); 
 
             // Neural Cascade Opacity Setup
             let tempPulse = new Float32Array(dots.length);
@@ -423,8 +436,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 let dot = dots[i];
                 const centerDistX = Math.abs((width / 2) - dot.baseX) / (width / 2);
                 
-                // Track mouse proximity early to natively wake up the node's geometry color
-                const distToMouse = Math.hypot(mouse.x - dot.x, mouse.y - dot.y);
+                // Track mouse proximity (Adjusted for parallax math natively so light binds perfectly to structure)
+                const distToMouse = Math.hypot(mouse.x - dot.x, (mouse.y + parallaxY) - dot.y);
                 const isHovered = distToMouse < 180;
                 
                 // Only fire pulses if colored AND outside the center 60%
@@ -497,9 +510,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
                 
-                // Mouse Drag Elasticity & Light Flare
+                // Mouse Drag Elasticity & Light Flare (Mapped to parallax grid Y)
                 const dx = mouse.x - dot.x;
-                const dy = mouse.y - dot.y;
+                const dy = (mouse.y + parallaxY) - dot.y;
                 const dist = Math.sqrt(dx*dx + dy*dy);
                 
                 let mouseGlow = 0;

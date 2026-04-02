@@ -7,7 +7,7 @@
     <title>{{ page.title | default: "Yotam | Portfolio" }}</title>
     <!-- Google Stitch System Font -->
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ '/style.css' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/style.css' | relative_url }}?v={{ site.time | date: '%s' }}">
     <!-- Highlight.js Themes -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css" id="hljs-light">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" id="hljs-dark" disabled>
@@ -48,7 +48,7 @@
 
     {{ content }}
 
-    <script src="{{ '/script.js' | relative_url }}"></script>
+    <script src="{{ '/script.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>
     <script>
         // Safely execute HighlightJS after render
         if (typeof hljs !== 'undefined') {

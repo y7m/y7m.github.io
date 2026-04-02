@@ -219,3 +219,72 @@ code { background: #fafafa; color: #e01258; padding: 4px 8px; border-radius: 6px
 
 /* Interactive Background */
 #bg-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -10; pointer-events: none; opacity: 1; }
+
+/* Desktop-only badge */
+.badge-desktop {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.7rem;
+    padding: 4px 10px;
+    border-radius: var(--radius-btn);
+    background: var(--border-color);
+    color: var(--text-muted);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 12px;
+}
+
+/* ======================== */
+/* Mobile Responsive Styles */
+/* ======================== */
+
+@media (max-width: 768px) {
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.5rem; }
+    h3 { font-size: 1.2rem; }
+
+    .nav-container { padding: 0 16px; }
+    .nav-links { gap: 16px; }
+    .nav-link { font-size: 0.9rem; }
+
+    .main-content { padding: calc(var(--nav-height) + 20px) 16px 20px; }
+
+    /* Hero: stack vertically, center everything */
+    #hero {
+        flex-direction: column !important;
+        gap: 40px !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center;
+    }
+    .hero-content { min-width: 0 !important; width: 100%; }
+    .hero-content h2 { font-size: 1.3rem; }
+
+    /* Social links: wrap and center */
+    .social-links {
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+    }
+    .social-links .btn { margin-left: 0 !important; }
+
+    /* Game: center and scale down on very small screens */
+    .hero-game { flex-shrink: 1 !important; }
+    .game-container { width: 280px; height: 280px; }
+
+    /* Project grid: single column */
+    .projects-grid { grid-template-columns: 1fr; }
+
+    /* Article */
+    .article-container { padding: 0; }
+
+    /* Blog cards */
+    .blog-card { padding: 20px; }
+}
+
+@media (max-width: 380px) {
+    h1 { font-size: 1.6rem; }
+    .game-container { width: 240px; height: 240px; }
+    .nav-logo { font-size: 1.4rem; }
+}

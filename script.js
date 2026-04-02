@@ -397,7 +397,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
         
-        window.addEventListener('resize', initDots);
+        let lastWidth = window.innerWidth;
+        window.addEventListener('resize', () => {
+            if (window.innerWidth !== lastWidth) {
+                lastWidth = window.innerWidth;
+                initDots();
+            }
+        });
         initDots();
 
         let mouse = { x: -1000, y: -1000 };
@@ -405,13 +411,6 @@ document.addEventListener('DOMContentLoaded', () => {
             mouse.x = e.clientX;
             mouse.y = e.clientY;
         });
-        
-        window.addEventListener('touchmove', e => {
-            if (e.touches.length > 0) {
-                mouse.x = e.touches[0].clientX;
-                mouse.y = e.touches[0].clientY;
-            }
-        }, {passive: true});
 
         function animate() {
             ctx.setTransform(1, 0, 0, 1, 0, 0); // Reset for clear

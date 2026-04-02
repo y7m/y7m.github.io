@@ -1,77 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog | Yotam Levi</title>
-    <!-- Use the style.css from the parent directory -->
-    <link rel="stylesheet" href="../style.css">
-    <style>
-        /* Blog Specific Styles for readability (Neumorphic) */
-        .blog-header {
-            margin-bottom: 50px;
-        }
-
-        .blog-list {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-        }
-
-        /* Leveraging .neu-card from style.css but adding specific internal layout */
-        .blog-card {
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .blog-date {
-            color: var(--accent-blue);
-            font-size: 0.9rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .blog-title {
-            font-size: 1.8rem;
-            font-weight: 800;
-            line-height: 1.2;
-            color: var(--text-main);
-        }
-
-        .blog-excerpt {
-            color: var(--text-main);
-            opacity: 0.85;
-            font-size: 1.05rem;
-            line-height: 1.6;
-            margin-top: 5px;
-        }
-    </style>
-</head>
-
-<body>
-
-    <!-- Navigation Bar -->
-    <nav class="navbar scrolled" id="main-nav">
-        <div class="nav-container">
-            <a href="../index.html" class="nav-logo text-primary">Y7M</a>
-            <div class="nav-links">
-                <a href="../index.html#about" class="nav-link">About</a>
-                <a href="../index.html#projects" class="nav-link">Projects</a>
-                <a href="index.html" class="nav-link text-primary" style="font-weight:800;">Blog</a>
-                <label class="label" aria-label="Toggle Dark Mode" title="Toggle Dark Mode" style="margin-left: 15px; cursor: pointer;">
-                    <div class="toggle">
-                        <input class="toggle-state" type="checkbox" id="theme-switch" />
-                        <div class="indicator"></div>
-                    </div>
-                </label>
-            </div>
-        </div>
-    </nav>
+---
+layout: default
+nav_scrolled: true
+title: Blog | Yotam
+---
 
     <div class="main-content">
 
@@ -83,25 +14,16 @@
 
             <div class="blog-list">
 
-                <!-- Blog Post Entry -->
-                <a href="/blog/post-template.html" class="neu-card blog-card">
-                    <span class="blog-date">March 2, 2026</span>
-                    <h2 class="blog-title">Building a portfolio that doesn't just look like a template</h2>
-                    <p class="blog-excerpt">Exploring the delicate balance between standard UX practices and injecting a bit of personality, like a fully playable 2048 game, into your personal site.</p>
+                <!-- Dynamically generated posts -->
+                {% for post in site.posts %}
+                <a href="{{ post.url | relative_url }}" class="card blog-card">
+                    <span class="blog-date">{{ post.date | date: "%B %-d, %Y" }}</span>
+                    <h2 class="blog-title">{{ post.title }}</h2>
+                    <p class="blog-excerpt">{{ post.content | strip_html | truncatewords: 25 }}</p>
                 </a>
-
-                <!-- Blog Post Entry -->
-                <a href="#" class="neu-card blog-card">
-                    <span class="blog-date">February 15, 2026</span>
-                    <h2 class="blog-title">Learning modern CSS architectures</h2>
-                    <p class="blog-excerpt">A deep dive into variables, neumorphism, and why we might not always need huge utility frameworks for small personal projects.</p>
-                </a>
+                {% endfor %}
 
             </div>
         </section>
 
     </div>
-
-</body>
-
-</html>

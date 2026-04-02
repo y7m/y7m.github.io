@@ -1,0 +1,33 @@
+---
+layout: default
+nav_scrolled: true
+---
+<div class="main-content">
+
+    <article class="article-container section visible">
+
+        <a href="{{ '/blog/' | relative_url }}" class="back-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            Back to Blog
+        </a>
+
+        <header class="article-header">
+            <h1 class="article-title text-primary">{{ page.title }}</h1>
+            <div class="article-meta">
+                <span>{{ page.date | date: "%B %-d, %Y" }}</span>
+                <span>•</span>
+                <span>{{ page.content | number_of_words | divided_by: 200 | plus: 1 }} min read</span>
+            </div>
+        </header>
+
+        <div class="article-content">
+            {{ content }}
+        </div>
+
+    </article>
+
+</div>

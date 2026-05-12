@@ -209,13 +209,10 @@ code { background: #fafafa; color: #e01258; padding: 4px 8px; border-radius: 6px
 .back-link:hover { transform: translateY(-2px); color: var(--primary); border-color: var(--primary); }
 
 /* Custom Brands */
-.btn-resume { background: var(--surface-card); color: var(--text-main); border: 1px solid var(--border-color); }
-[data-theme="dark"] .btn-resume { color: var(--text-main); border: 1px solid var(--border-color); }
 
 .icon-btn[data-brand="email"]:hover { background: var(--secondary); border-color: var(--secondary); color: #fff; }
 .icon-btn[data-brand="linkedin"]:hover { background: #0077b5; border-color: #0077b5; color: #fff; }
 .icon-btn[data-brand="github"]:hover { background: #6e5494; border-color: #6e5494; color: #fff; }
-.btn-resume:hover { background: #4A7C59 !important; border-color: #4A7C59 !important; color: #fff !important; }
 
 /* Interactive Background */
 #bg-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -10; pointer-events: none; opacity: 1; }
